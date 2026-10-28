@@ -1,0 +1,80 @@
+{
+  "disciplinas": [
+    {
+      "codigo": "ARQ - Escopo",
+      "progresso": 3
+    },
+    {
+      "codigo": "ARQ",
+      "progresso": 0
+    },
+    {
+      "codigo": "*",
+      "progresso": 0
+    },
+    {
+      "codigo": ".Rebaixo de Forro na garagem",
+      "progresso": 0
+    },
+    {
+      "codigo": "EST - Escopo",
+      "progresso": 0
+    },
+    {
+      "codigo": "*344-ARQ-DET-000-PINTURAGERAGEM-TR",
+      "progresso": 10
+    }
+  ],
+  "entregaveis": [
+    {
+      "codigo": "ARQ - Escopo",
+      "status": "Pendente"
+    },
+    {
+      "codigo": "ARQ",
+      "status": "Pendente"
+    },
+    {
+      "codigo": "*",
+      "status": "Pendente"
+    },
+    {
+      "codigo": ".Rebaixo de Forro na garagem",
+      "status": "Pendente"
+    },
+    {
+      "codigo": "EST - Escopo",
+      "status": "Pendente"
+    },
+    {
+      "codigo": "*344-ARQ-DET-000-PINTURAGERAGEM-TR",
+      "status": "Aprovado"
+    }
+  ],
+  "pendencias": [
+    {
+      "descricao": "ARQ - Escopo",
+      "status": "Pendente"
+    },
+    {
+      "descricao": "ARQ",
+      "status": "Pendente"
+    },
+    {
+      "descricao": "*",
+      "status": "Pendente"
+    },
+    {
+      "descricao": ".Rebaixo de Forro na garagem",
+      "status": "Pendente"
+    },
+    {
+      "descricao": "EST - Escopo",
+      "status": "Pendente"
+    },
+    {
+      "descricao": "*344-ARQ-DET-000-PINTURAGERAGEM-TR",
+      "status": "Aprovado"
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard CDE</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #191919; color: #ededed; padding: 16px; font-size: 14px; }
+    
+    h1 { font-size: 1.2rem; margin-bottom: 16px; color: #38bdf8; border-bottom: 1px solid #333; padding-bottom: 8px; }
+    
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .card { background: #222; border: 1px solid #333; border-radius: 6px; padding: 14px; }
+    .card-title { color: #888; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; }
+    .card-value { font-size: 1.5rem; font-weight: bold; }
+
+    .section-title { font-size: 0.95rem; font-weight: bold; margin-bottom: 12px; color: #ccc; }
+    
+    .prog-item { margin-bottom: 12px; }
+    .prog-header { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.85rem; }
+    .prog-bar-bg { background: #333; height: 8px; border-radius: 4px; overflow: hidden; }
+    .prog-bar-fill { background: #38bdf8; height: 100%; width: 0%; transition: width 0.4s ease; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 0.8rem; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #2a2a2a; }
+    th { color: #777; background: #161616; }
+    
+    .status-tag { padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+    .aprovado { background: #064e3b; color: #34d399; }
+    .pendente { background: #78350f; color: #fde047; }
+  </style>
+</head>
+<body>
+
+  <h1>CDE - Painel de Acompanhamento</h1>
+
+  <!-- CARDS RESUMO -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Disciplinas</div>
+      <div class="card-value" id="kpi-disciplinas">0</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Total Entregáveis</div>
+      <div class="card-value" id="kpi-entregaveis">0</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Pendências Abertas</div>
+      <div class="card-value" id="kpi-pendencias" style="color: #fde047;">0</div>
+    </div>
+  </div>
+
+  <!-- PROGRESSO DAS DISCIPLINAS -->
+  <div class="card" style="margin-bottom: 16px;">
+    <div class="section-title">Progresso por Disciplina</div>
+    <div id="disciplinas-list">A carregar...</div>
+  </div>
+
+  <!-- TABELA DE ENTREGÁVEIS -->
+  <div class="card">
+    <div class="section-title">Entregáveis</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="entregaveis-list"></tbody>
+    </table>
+  </div>
+
+  <script>
+    fetch('dados.json')
+      .then(res => res.json())
+      .then(data => {
+        // KPIs
+        document.getElementById('kpi-disciplinas').innerText = data.disciplinas.length;
+        document.getElementById('kpi-entregaveis').innerText = data.entregaveis.length;
+        document.getElementById('kpi-pendencias').innerText = data.pendencias.filter(p => !p.status.toLowerCase().includes('aprov') && !p.status.toLowerCase().includes('conclu')).length;
+
+        // Disciplinas
+        const discContainer = document.getElementById('disciplinas-list');
+        discContainer.innerHTML = '';
+        data.disciplinas.forEach(d => {
+          discContainer.innerHTML += `
+            <div class="prog-item">
+              <div class="prog-header">
+                <span><strong>${d.codigo}</strong></span>
+                <span>${d.progresso}%</span>
+              </div>
+              <div class="prog-bar-bg">
+                <div class="prog-bar-fill" style="width: ${d.progresso}%;"></div>
+              </div>
+            </div>
+          `;
+        });
+
+        // Entregáveis
+        const entContainer = document.getElementById('entregaveis-list');
+        entContainer.innerHTML = '';
+        data.entregaveis.forEach(e => {
+          const isAprovado = e.status.toLowerCase().includes('aprov') || e.status.toLowerCase().includes('conclu');
+          const tagClass = isAprovado ? 'aprovado' : 'pendente';
+          entContainer.innerHTML += `
+            <tr>
+              <td>${e.codigo}</td>
+              <td><span class="status-tag ${tagClass}">${e.status}</span></td>
+            </tr>
+          `;
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('disciplinas-list').innerText = "Erro ao carregar os dados. Certifique-se de que o ficheiro dados.json está na mesma pasta.";
+      });
+  </script>
+</body>
+</html>
