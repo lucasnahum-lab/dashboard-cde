@@ -1,80 +1,422 @@
 {
   "disciplinas": [
     {
-      "codigo": "ARQ - Escopo",
-      "progresso": 3
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "-",
+      "Fase de Projeto": "-",
+      "Data Início": "-",
+      "Revisão (R00)": "-",
+      "Progresso": 0.03,
+      "Formato Arquivo": "-",
+      "Histórico de Atrasos": "-",
+      "Comentários": "Projetista precisa de aprovação da COO",
+      "Pavimento": "-",
+      "Data Prevista": "-",
+      "Entregáveis": "-",
+      "Status": "Pendente",
+      "Entregável Relacionado": "-",
+      "Disciplina": "2 item(ns)",
+      "Responsável": "-",
+      "Descrição/Código": "ARQ - Escopo"
     },
     {
-      "codigo": "ARQ",
-      "progresso": 0
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "-",
+      "Fase de Projeto": "-",
+      "Data Início": "-",
+      "Revisão (R00)": "-",
+      "Progresso": "-",
+      "Formato Arquivo": "-",
+      "Histórico de Atrasos": "-",
+      "Comentários": "-",
+      "Pavimento": "-",
+      "Data Prevista": "-",
+      "Entregáveis": "1 item(ns)",
+      "Status": "Pendente",
+      "Entregável Relacionado": "-",
+      "Disciplina": "-",
+      "Responsável": "-",
+      "Descrição/Código": "ARQ"
     },
     {
-      "codigo": "*",
-      "progresso": 0
+      "Data Upload": "2026-10-28",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "Autodoc",
+      "Fase de Projeto": "-",
+      "Data Início": "-",
+      "Revisão (R00)": "R00",
+      "Progresso": "-",
+      "Formato Arquivo": [
+        "DWG",
+        "PDF"
+      ],
+      "Histórico de Atrasos": "-",
+      "Comentários": "-",
+      "Pavimento": [
+        "TER"
+      ],
+      "Data Prevista": "2026-10-26",
+      "Entregáveis": "-",
+      "Status": "Pendente",
+      "Entregável Relacionado": "-",
+      "Disciplina": "1 item(ns)",
+      "Responsável": "-",
+      "Descrição/Código": "*344-EST-DET-000-VIGA102-TR"
     },
     {
-      "codigo": ".Rebaixo de Forro na garagem",
-      "progresso": 0
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "Whatsapp",
+      "Fase de Projeto": "-",
+      "Data Início": "2026-10-13",
+      "Revisão (R00)": "-",
+      "Progresso": "-",
+      "Formato Arquivo": "-",
+      "Histórico de Atrasos": "-",
+      "Comentários": "Rebaixar forro para 10cm",
+      "Pavimento": [
+        "TER"
+      ],
+      "Data Prevista": "-",
+      "Entregáveis": "-",
+      "Status": "Em análise",
+      "Entregável Relacionado": "1 item(ns)",
+      "Disciplina": "1 item(ns)",
+      "Responsável": [
+        "Quadra",
+        "Marcus"
+      ],
+      "Descrição/Código": ".Rebaixo de Forro na garagem"
     },
     {
-      "codigo": "EST - Escopo",
-      "progresso": 0
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "-",
+      "Fase de Projeto": "Anteprojeto",
+      "Data Início": "-",
+      "Revisão (R00)": "-",
+      "Progresso": 0,
+      "Formato Arquivo": "-",
+      "Histórico de Atrasos": "-",
+      "Comentários": "Projeto em andamento",
+      "Pavimento": "-",
+      "Data Prevista": "-",
+      "Entregáveis": "-",
+      "Status": "Pendente",
+      "Entregável Relacionado": "-",
+      "Disciplina": "1 item(ns)",
+      "Responsável": [
+        "Solest",
+        "Marcos"
+      ],
+      "Descrição/Código": "EST - Escopo"
     },
     {
-      "codigo": "*344-ARQ-DET-000-PINTURAGERAGEM-TR",
-      "progresso": 10
-    }
-  ],
-  "entregaveis": [
-    {
-      "codigo": "ARQ - Escopo",
-      "status": "Pendente"
-    },
-    {
-      "codigo": "ARQ",
-      "status": "Pendente"
-    },
-    {
-      "codigo": "*",
-      "status": "Pendente"
-    },
-    {
-      "codigo": ".Rebaixo de Forro na garagem",
-      "status": "Pendente"
-    },
-    {
-      "codigo": "EST - Escopo",
-      "status": "Pendente"
-    },
-    {
-      "codigo": "*344-ARQ-DET-000-PINTURAGERAGEM-TR",
-      "status": "Aprovado"
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "Autodoc",
+      "Fase de Projeto": "Anteprojeto",
+      "Data Início": "-",
+      "Revisão (R00)": "R00",
+      "Progresso": 0.1,
+      "Formato Arquivo": [
+        "DWG",
+        "PDF"
+      ],
+      "Histórico de Atrasos": "xx/xx/xx - Projetista não informou motivo de atraso\nxx/xx/xx - Atraso por conta de pendências em disciplinas complementares",
+      "Comentários": "-",
+      "Pavimento": [
+        "TER"
+      ],
+      "Data Prevista": "2026-10-30",
+      "Entregáveis": "1 item(ns)",
+      "Status": "Aprovado",
+      "Entregável Relacionado": "1 item(ns)",
+      "Disciplina": "1 item(ns)",
+      "Responsável": "-",
+      "Descrição/Código": "*344-ARQ-DET-000-PINTURAGERAGEM-TR"
     }
   ],
   "pendencias": [
     {
-      "descricao": "ARQ - Escopo",
-      "status": "Pendente"
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "-",
+      "Fase de Projeto": "-",
+      "Data Início": "-",
+      "Revisão (R00)": "-",
+      "Progresso": 0.03,
+      "Formato Arquivo": "-",
+      "Histórico de Atrasos": "-",
+      "Comentários": "Projetista precisa de aprovação da COO",
+      "Pavimento": "-",
+      "Data Prevista": "-",
+      "Entregáveis": "-",
+      "Status": "Pendente",
+      "Entregável Relacionado": "-",
+      "Disciplina": "2 item(ns)",
+      "Responsável": "-",
+      "Descrição/Código": "ARQ - Escopo"
     },
     {
-      "descricao": "ARQ",
-      "status": "Pendente"
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "-",
+      "Fase de Projeto": "-",
+      "Data Início": "-",
+      "Revisão (R00)": "-",
+      "Progresso": "-",
+      "Formato Arquivo": "-",
+      "Histórico de Atrasos": "-",
+      "Comentários": "-",
+      "Pavimento": "-",
+      "Data Prevista": "-",
+      "Entregáveis": "1 item(ns)",
+      "Status": "Pendente",
+      "Entregável Relacionado": "-",
+      "Disciplina": "-",
+      "Responsável": "-",
+      "Descrição/Código": "ARQ"
     },
     {
-      "descricao": "*",
-      "status": "Pendente"
+      "Data Upload": "2026-10-28",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "Autodoc",
+      "Fase de Projeto": "-",
+      "Data Início": "-",
+      "Revisão (R00)": "R00",
+      "Progresso": "-",
+      "Formato Arquivo": [
+        "DWG",
+        "PDF"
+      ],
+      "Histórico de Atrasos": "-",
+      "Comentários": "-",
+      "Pavimento": [
+        "TER"
+      ],
+      "Data Prevista": "2026-10-26",
+      "Entregáveis": "-",
+      "Status": "Pendente",
+      "Entregável Relacionado": "-",
+      "Disciplina": "1 item(ns)",
+      "Responsável": "-",
+      "Descrição/Código": "*344-EST-DET-000-VIGA102-TR"
     },
     {
-      "descricao": ".Rebaixo de Forro na garagem",
-      "status": "Pendente"
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "Whatsapp",
+      "Fase de Projeto": "-",
+      "Data Início": "2026-10-13",
+      "Revisão (R00)": "-",
+      "Progresso": "-",
+      "Formato Arquivo": "-",
+      "Histórico de Atrasos": "-",
+      "Comentários": "Rebaixar forro para 10cm",
+      "Pavimento": [
+        "TER"
+      ],
+      "Data Prevista": "-",
+      "Entregáveis": "-",
+      "Status": "Em análise",
+      "Entregável Relacionado": "1 item(ns)",
+      "Disciplina": "1 item(ns)",
+      "Responsável": [
+        "Quadra",
+        "Marcus"
+      ],
+      "Descrição/Código": ".Rebaixo de Forro na garagem"
     },
     {
-      "descricao": "EST - Escopo",
-      "status": "Pendente"
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "-",
+      "Fase de Projeto": "Anteprojeto",
+      "Data Início": "-",
+      "Revisão (R00)": "-",
+      "Progresso": 0,
+      "Formato Arquivo": "-",
+      "Histórico de Atrasos": "-",
+      "Comentários": "Projeto em andamento",
+      "Pavimento": "-",
+      "Data Prevista": "-",
+      "Entregáveis": "-",
+      "Status": "Pendente",
+      "Entregável Relacionado": "-",
+      "Disciplina": "1 item(ns)",
+      "Responsável": [
+        "Solest",
+        "Marcos"
+      ],
+      "Descrição/Código": "EST - Escopo"
     },
     {
-      "descricao": "*344-ARQ-DET-000-PINTURAGERAGEM-TR",
-      "status": "Aprovado"
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "Autodoc",
+      "Fase de Projeto": "Anteprojeto",
+      "Data Início": "-",
+      "Revisão (R00)": "R00",
+      "Progresso": 0.1,
+      "Formato Arquivo": [
+        "DWG",
+        "PDF"
+      ],
+      "Histórico de Atrasos": "xx/xx/xx - Projetista não informou motivo de atraso\nxx/xx/xx - Atraso por conta de pendências em disciplinas complementares",
+      "Comentários": "-",
+      "Pavimento": [
+        "TER"
+      ],
+      "Data Prevista": "2026-10-30",
+      "Entregáveis": "1 item(ns)",
+      "Status": "Aprovado",
+      "Entregável Relacionado": "1 item(ns)",
+      "Disciplina": "1 item(ns)",
+      "Responsável": "-",
+      "Descrição/Código": "*344-ARQ-DET-000-PINTURAGERAGEM-TR"
+    }
+  ],
+  "entregaveis": [
+    {
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "-",
+      "Fase de Projeto": "-",
+      "Data Início": "-",
+      "Revisão (R00)": "-",
+      "Progresso": 0.03,
+      "Formato Arquivo": "-",
+      "Histórico de Atrasos": "-",
+      "Comentários": "Projetista precisa de aprovação da COO",
+      "Pavimento": "-",
+      "Data Prevista": "-",
+      "Entregáveis": "-",
+      "Status": "Pendente",
+      "Entregável Relacionado": "-",
+      "Disciplina": "2 item(ns)",
+      "Responsável": "-",
+      "Descrição/Código": "ARQ - Escopo"
+    },
+    {
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "-",
+      "Fase de Projeto": "-",
+      "Data Início": "-",
+      "Revisão (R00)": "-",
+      "Progresso": "-",
+      "Formato Arquivo": "-",
+      "Histórico de Atrasos": "-",
+      "Comentários": "-",
+      "Pavimento": "-",
+      "Data Prevista": "-",
+      "Entregáveis": "1 item(ns)",
+      "Status": "Pendente",
+      "Entregável Relacionado": "-",
+      "Disciplina": "-",
+      "Responsável": "-",
+      "Descrição/Código": "ARQ"
+    },
+    {
+      "Data Upload": "2026-10-28",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "Autodoc",
+      "Fase de Projeto": "-",
+      "Data Início": "-",
+      "Revisão (R00)": "R00",
+      "Progresso": "-",
+      "Formato Arquivo": [
+        "DWG",
+        "PDF"
+      ],
+      "Histórico de Atrasos": "-",
+      "Comentários": "-",
+      "Pavimento": [
+        "TER"
+      ],
+      "Data Prevista": "2026-10-26",
+      "Entregáveis": "-",
+      "Status": "Pendente",
+      "Entregável Relacionado": "-",
+      "Disciplina": "1 item(ns)",
+      "Responsável": "-",
+      "Descrição/Código": "*344-EST-DET-000-VIGA102-TR"
+    },
+    {
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "Whatsapp",
+      "Fase de Projeto": "-",
+      "Data Início": "2026-10-13",
+      "Revisão (R00)": "-",
+      "Progresso": "-",
+      "Formato Arquivo": "-",
+      "Histórico de Atrasos": "-",
+      "Comentários": "Rebaixar forro para 10cm",
+      "Pavimento": [
+        "TER"
+      ],
+      "Data Prevista": "-",
+      "Entregáveis": "-",
+      "Status": "Em análise",
+      "Entregável Relacionado": "1 item(ns)",
+      "Disciplina": "1 item(ns)",
+      "Responsável": [
+        "Quadra",
+        "Marcus"
+      ],
+      "Descrição/Código": ".Rebaixo de Forro na garagem"
+    },
+    {
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "-",
+      "Fase de Projeto": "Anteprojeto",
+      "Data Início": "-",
+      "Revisão (R00)": "-",
+      "Progresso": 0,
+      "Formato Arquivo": "-",
+      "Histórico de Atrasos": "-",
+      "Comentários": "Projeto em andamento",
+      "Pavimento": "-",
+      "Data Prevista": "-",
+      "Entregáveis": "-",
+      "Status": "Pendente",
+      "Entregável Relacionado": "-",
+      "Disciplina": "1 item(ns)",
+      "Responsável": [
+        "Solest",
+        "Marcos"
+      ],
+      "Descrição/Código": "EST - Escopo"
+    },
+    {
+      "Data Upload": "-",
+      "Compatibilização": "Pendente",
+      "Local de entrega": "Autodoc",
+      "Fase de Projeto": "Anteprojeto",
+      "Data Início": "-",
+      "Revisão (R00)": "R00",
+      "Progresso": 0.1,
+      "Formato Arquivo": [
+        "DWG",
+        "PDF"
+      ],
+      "Histórico de Atrasos": "xx/xx/xx - Projetista não informou motivo de atraso\nxx/xx/xx - Atraso por conta de pendências em disciplinas complementares",
+      "Comentários": "-",
+      "Pavimento": [
+        "TER"
+      ],
+      "Data Prevista": "2026-10-30",
+      "Entregáveis": "1 item(ns)",
+      "Status": "Aprovado",
+      "Entregável Relacionado": "1 item(ns)",
+      "Disciplina": "1 item(ns)",
+      "Responsável": "-",
+      "Descrição/Código": "*344-ARQ-DET-000-PINTURAGERAGEM-TR"
     }
   ]
 }
