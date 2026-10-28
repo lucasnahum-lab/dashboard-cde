@@ -6,60 +6,77 @@
   <title>Dashboard CDE</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #191919; color: #ededed; padding: 16px; font-size: 14px; }
+    body { background-color: #121212; color: #ededed; padding: 24px; font-size: 14px; max-width: 1200px; margin: 0 auto; }
     
-    h1 { font-size: 1.2rem; margin-bottom: 16px; color: #38bdf8; border-bottom: 1px solid #333; padding-bottom: 8px; }
+    .header { border-bottom: 2px solid #222; padding-bottom: 12px; margin-bottom: 24px; }
+    h1 { font-size: 1.4rem; color: #38bdf8; font-weight: 700; }
     
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; }
-    .card { background: #222; border: 1px solid #333; border-radius: 6px; padding: 14px; }
-    .card-title { color: #888; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; }
-    .card-value { font-size: 1.5rem; font-weight: bold; }
+    /* Indicadores de Topo (KPIs) */
+    .grid-kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .kpi-card { background: #1e1e1e; border: 1px solid #2d2d2d; border-radius: 8px; padding: 18px; }
+    .kpi-title { color: #888; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px; }
+    .kpi-value { font-size: 1.8rem; font-weight: bold; color: #fff; }
 
-    .section-title { font-size: 0.95rem; font-weight: bold; margin-bottom: 12px; color: #ccc; }
-    
-    .prog-item { margin-bottom: 12px; }
-    .prog-header { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.85rem; }
-    .prog-bar-bg { background: #333; height: 8px; border-radius: 4px; overflow: hidden; }
+    /* Blocos Individuais de Cada Tabela */
+    .section-block { background: #1e1e1e; border: 1px solid #2d2d2d; border-radius: 10px; padding: 20px; margin-bottom: 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #2d2d2d; }
+    .section-title { font-size: 1.05rem; font-weight: 600; color: #38bdf8; }
+    .badge { background: #2a2a2a; color: #aaa; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; }
+
+    /* Barras de Progresso */
+    .prog-item { margin-bottom: 14px; }
+    .prog-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; }
+    .prog-bar-bg { background: #2a2a2a; height: 10px; border-radius: 5px; overflow: hidden; }
     .prog-bar-fill { background: #38bdf8; height: 100%; width: 0%; transition: width 0.4s ease; }
 
-    table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 0.8rem; }
-    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #2a2a2a; }
-    th { color: #777; background: #161616; }
+    /* Tabelas Independente */
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #2a2a2a; }
+    th { color: #888; background: #161616; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; }
+    tr:last-child td { border-bottom: none; }
     
-    .status-tag { padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+    .status-tag { padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
     .aprovado { background: #064e3b; color: #34d399; }
     .pendente { background: #78350f; color: #fde047; }
   </style>
 </head>
 <body>
 
-  <h1>CDE - Painel de Acompanhamento</h1>
+  <div class="header">
+    <h1>CDE - Painel de Acompanhamento</h1>
+  </div>
 
-  <!-- CARDS RESUMO -->
-  <div class="grid">
-    <div class="card">
-      <div class="card-title">Disciplinas</div>
-      <div class="card-value" id="kpi-disciplinas">0</div>
+  <!-- INDICADORES RESUMO (KPIs) -->
+  <div class="grid-kpi">
+    <div class="kpi-card">
+      <div class="kpi-title">Disciplinas</div>
+      <div class="kpi-value" id="kpi-disciplinas">0</div>
     </div>
-    <div class="card">
-      <div class="card-title">Total Entregáveis</div>
-      <div class="card-value" id="kpi-entregaveis">0</div>
+    <div class="kpi-card">
+      <div class="kpi-title">Total Entregáveis</div>
+      <div class="kpi-value" id="kpi-entregaveis">0</div>
     </div>
-    <div class="card">
-      <div class="card-title">Pendências Abertas</div>
-      <div class="card-value" id="kpi-pendencias" style="color: #fde047;">0</div>
+    <div class="kpi-card">
+      <div class="kpi-title">Pendências Abertas</div>
+      <div class="kpi-value" id="kpi-pendencias" style="color: #fde047;">0</div>
     </div>
   </div>
 
-  <!-- PROGRESSO DAS DISCIPLINAS -->
-  <div class="card" style="margin-bottom: 16px;">
-    <div class="section-title">Progresso por Disciplina</div>
+  <!-- BLOCO 1: DISCIPLINAS & ESCOPO -->
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-title">📘 1. Disciplinas & Escopo</div>
+      <span class="badge" id="badge-disciplinas">0 itens</span>
+    </div>
     <div id="disciplinas-list">A carregar...</div>
   </div>
 
-  <!-- TABELA DE ENTREGÁVEIS -->
-  <div class="card">
-    <div class="section-title">Entregáveis</div>
+  <!-- BLOCO 2: ENTREGÁVEIS -->
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-title">📦 2. Entregáveis</div>
+      <span class="badge" id="badge-entregaveis">0 itens</span>
+    </div>
     <table>
       <thead>
         <tr>
@@ -71,50 +88,91 @@
     </table>
   </div>
 
+  <!-- BLOCO 3: GESTÃO DE PENDÊNCIAS -->
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-title">⚠️ 3. Gestão de Pendências</div>
+      <span class="badge" id="badge-pendencias">0 itens</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Descrição / Item</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="pendencias-list"></tbody>
+    </table>
+  </div>
+
   <script>
     fetch('dados.json')
       .then(res => res.json())
       .then(data => {
-        // KPIs
-        document.getElementById('kpi-disciplinas').innerText = data.disciplinas.length;
-        document.getElementById('kpi-entregaveis').innerText = data.entregaveis.length;
-        document.getElementById('kpi-pendencias').innerText = data.pendencias.filter(p => !p.status.toLowerCase().includes('aprov') && !p.status.toLowerCase().includes('conclu')).length;
+        // Atualizar KPIs
+        document.getElementById('kpi-disciplinas').innerText = data.disciplinas ? data.disciplinas.length : 0;
+        document.getElementById('kpi-entregaveis').innerText = data.entregaveis ? data.entregaveis.length : 0;
+        
+        const abertas = data.pendencias ? data.pendencias.filter(p => !p.status.toLowerCase().includes('aprov') && !p.status.toLowerCase().includes('conclu')).length : 0;
+        document.getElementById('kpi-pendencias').innerText = abertas;
 
-        // Disciplinas
+        // Atualizar Badges de Contagem
+        document.getElementById('badge-disciplinas').innerText = (data.disciplinas ? data.disciplinas.length : 0) + ' disciplinas';
+        document.getElementById('badge-entregaveis').innerText = (data.entregaveis ? data.entregaveis.length : 0) + ' entregáveis';
+        document.getElementById('badge-pendencias').innerText = (data.pendencias ? data.pendencias.length : 0) + ' pendências';
+
+        // 1. Renderizar Disciplinas
         const discContainer = document.getElementById('disciplinas-list');
         discContainer.innerHTML = '';
-        data.disciplinas.forEach(d => {
-          discContainer.innerHTML += `
-            <div class="prog-item">
-              <div class="prog-header">
-                <span><strong>${d.codigo}</strong></span>
-                <span>${d.progresso}%</span>
+        if (data.disciplinas && data.disciplinas.length > 0) {
+          data.disciplinas.forEach(d => {
+            discContainer.innerHTML += `
+              <div class="prog-item">
+                <div class="prog-header">
+                  <span><strong>${d.codigo}</strong></span>
+                  <span>${d.progresso}%</span>
+                </div>
+                <div class="prog-bar-bg">
+                  <div class="prog-bar-fill" style="width: ${d.progresso}%;"></div>
+                </div>
               </div>
-              <div class="prog-bar-bg">
-                <div class="prog-bar-fill" style="width: ${d.progresso}%;"></div>
-              </div>
-            </div>
-          `;
-        });
+            `;
+          });
+        }
 
-        // Entregáveis
+        // 2. Renderizar Entregáveis
         const entContainer = document.getElementById('entregaveis-list');
         entContainer.innerHTML = '';
-        data.entregaveis.forEach(e => {
-          const isAprovado = e.status.toLowerCase().includes('aprov') || e.status.toLowerCase().includes('conclu');
-          const tagClass = isAprovado ? 'aprovado' : 'pendente';
-          entContainer.innerHTML += `
-            <tr>
-              <td>${e.codigo}</td>
-              <td><span class="status-tag ${tagClass}">${e.status}</span></td>
-            </tr>
-          `;
-        });
+        if (data.entregaveis && data.entregaveis.length > 0) {
+          data.entregaveis.forEach(e => {
+            const isAprovado = e.status.toLowerCase().includes('aprov') || e.status.toLowerCase().includes('conclu');
+            const tagClass = isAprovado ? 'aprovado' : 'pendente';
+            entContainer.innerHTML += `
+              <tr>
+                <td><strong>${e.codigo}</strong></td>
+                <td><span class="status-tag ${tagClass}">${e.status}</span></td>
+              </tr>
+            `;
+          });
+        }
+
+        // 3. Renderizar Pendências
+        const pendContainer = document.getElementById('pendencias-list');
+        pendContainer.innerHTML = '';
+        if (data.pendencias && data.pendencias.length > 0) {
+          data.pendencias.forEach(p => {
+            const isAprovado = p.status.toLowerCase().includes('aprov') || p.status.toLowerCase().includes('conclu');
+            const tagClass = isAprovado ? 'aprovado' : 'pendente';
+            pendContainer.innerHTML += `
+              <tr>
+                <td><strong>${p.codigo || p.descricao || 'Item sem nome'}</strong></td>
+                <td><span class="status-tag ${tagClass}">${p.status}</span></td>
+              </tr>
+            `;
+          });
+        }
       })
-      .catch(err => {
-        console.error(err);
-        document.getElementById('disciplinas-list').innerText = "Erro ao carregar os dados. Certifique-se de que o ficheiro dados.json está na mesma pasta.";
-      });
+      .catch(err => console.error(err));
   </script>
 </body>
 </html>
