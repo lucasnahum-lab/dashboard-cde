@@ -41,8 +41,8 @@
     td { padding: 10px; border-bottom: 1px solid #252525; color: #ddd; vertical-align: middle; }
     tr:hover { background: #252525; }
 
-    /* Estilização de Status e Conectores */
-    .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; background: #2d2d2d; color: #ccc; }
+    /* Tags */
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; background: #2d2d2d; color: #ccc; margin: 1px; }
     .tag-aprovado { background: #064e3b; color: #34d399; }
     .tag-pendente { background: #78350f; color: #fde047; }
     .tag-atrasado { background: #7f1d1d; color: #f87171; }
@@ -63,7 +63,7 @@
     </div>
   </div>
 
-  <!-- ABAS ESTILO NOTION -->
+  <!-- NAVEGAÇÃO POR ABAS -->
   <div class="tabs-nav">
     <button class="tab-btn active" onclick="switchTab('tab-disciplinas', this)">📘 Disciplinas & Escopo</button>
     <button class="tab-btn" onclick="switchTab('tab-pendencias', this)">⚠️ Gestão de Pendências</button>
@@ -114,7 +114,7 @@
       <table>
         <thead>
           <tr>
-            <th>Descrição/Código</th><th>Disciplina</th><th>Responsável</th><th>Pavimento</th><th>Comentários (Ações)</th><th>Data Início</th><th>Status</th><th>Local Discussão</th><th>Entregável Relacionado</th>
+            <th>Descrição/Código</th><th>Disciplina</th><th>Responsável</th><th>Pavimento</th><th>Comentários</th><th>Data Início</th><th>Status</th><th>Local Discussão</th><th>Entregável Relacionado</th>
           </tr>
         </thead>
         <tbody id="body-pendencias"></tbody>
@@ -172,6 +172,7 @@
     }
 
     function getProp(row, keys) {
+      if (!row) return '-';
       for (let k of keys) {
         for (let rk in row) {
           if (rk.toLowerCase().trim() === k.toLowerCase().trim()) return row[rk];
@@ -180,55 +181,67 @@
       return '-';
     }
 
+    let chartInstances = {};
+
     fetch('dados.json')
       .then(res => res.json())
       .then(data => {
-        // Agrupa todos os registros
-        const todosItens = [
-          ...(data.disciplinas || []),
-          ...(data.pendencias || []),
-          ...(data.entregaveis || [])
-        ];
+        // Consolidar todos os itens da base
+        let rawItems = [];
+        if (Array.isArray(data)) {
+          rawItems = data;
+        } else {
+          const d1 = data.disciplinas || [];
+          const d2 = data.pendencias || [];
+          const d3 = data.entregaveis || [];
+          const map = new Map();
+          [...d1, ...d2, ...d3].forEach(item => {
+            const key = getProp(item, ['Descrição/Código', 'Código', 'Nome']);
+            if (key && key !== '-' && !map.has(key)) map.set(key, item);
+          });
+          rawItems = Array.from(map.values());
+        }
 
-        // 1. Filtro Disciplinas: Itens que contêm "Escopo" no nome
-        const disc = todosItens.filter((item, index, self) => {
+        // --- FILTROS EXATOS DO NOTION ---
+
+        // 1. Disciplinas / Escopo: Nome contém "Escopo"
+        const listDisciplinas = rawItems.filter(item => {
           const nome = String(getProp(item, ['Descrição/Código', 'Código', 'Nome'])).toLowerCase();
-          return nome.includes('escopo') && self.findIndex(i => getProp(i, ['Descrição/Código']) === getProp(item, ['Descrição/Código'])) === index;
+          return nome.includes('escopo');
         });
 
-        // 2. Filtro Entregáveis: Código começa com "*" ou contém formato de entregável
-        const entr = todosItens.filter((item, index, self) => {
-          const nome = String(getProp(item, ['Descrição/Código', 'Código', 'Nome']));
-          return (nome.startsWith('*') || nome.includes('-DET-') || nome.includes('-TR')) && 
-                 self.findIndex(i => getProp(i, ['Descrição/Código']) === getProp(item, ['Descrição/Código'])) === index;
+        // 2. Entregáveis: Nome começa com "*"
+        const listEntregaveis = rawItems.filter(item => {
+          const nome = String(getProp(item, ['Descrição/Código', 'Código', 'Nome'])).trim();
+          return nome.startsWith('*');
         });
 
-        // 3. Filtro Pendências: Começa com "." ou é um item isolado sem palavra Escopo e sem *
-        const pend = todosItens.filter((item, index, self) => {
-          const nome = String(getProp(item, ['Descrição/Código', 'Código', 'Nome']));
-          return (nome.startsWith('.') || (!nome.toLowerCase().includes('escopo') && !nome.startsWith('*'))) &&
-                 self.findIndex(i => getProp(i, ['Descrição/Código']) === getProp(item, ['Descrição/Código'])) === index;
+        // 3. Pendências: Nome começa com "." OU não é escopo nem entregável
+        const listPendencias = rawItems.filter(item => {
+          const nome = String(getProp(item, ['Descrição/Código', 'Código', 'Nome'])).trim();
+          return nome.startsWith('.') || (!nome.toLowerCase().includes('escopo') && !nome.startsWith('*') && nome !== '-');
         });
 
-        // Atualizar KPIs superiores com a contagem real e filtrada
-        document.getElementById('kpi-disciplinas').innerText = disc.length;
-        document.getElementById('kpi-pendencias').innerText = pend.length;
-        document.getElementById('kpi-entregaveis').innerText = entr.length;
+        // Atualizar KPIs com valores reais filtrados
+        document.getElementById('kpi-disciplinas').innerText = listDisciplinas.length;
+        document.getElementById('kpi-pendencias').innerText = listPendencias.length;
+        document.getElementById('kpi-entregaveis').innerText = listEntregaveis.length;
 
         // Renderizar Tabelas
-        renderTableDisciplinas(disc);
-        renderTablePendencias(pend);
-        renderTableEntregaveis(entr);
+        renderTableDisciplinas(listDisciplinas);
+        renderTablePendencias(listPendencias);
+        renderTableEntregaveis(listEntregaveis);
 
-        // Renderizar Gráficos
-        initChartsDisciplinas(disc);
-        initChartsPendencias(pend);
-        initChartsEntregaveis(entr);
-      });
+        // Renderizar Gráficos filtrados
+        initChartsDisciplinas(listDisciplinas);
+        initChartsPendencias(listPendencias);
+        initChartsEntregaveis(listEntregaveis);
+      })
+      .catch(err => console.error("Erro ao carregar dados.json:", err));
 
-    function renderTableDisciplinas(disc) {
+    function renderTableDisciplinas(list) {
       const body = document.getElementById('body-disciplinas');
-      body.innerHTML = disc.map(r => {
+      body.innerHTML = list.map(r => {
         const prog = parseFloat(String(getProp(r, ['Progresso'])).replace('%','')) || 0;
         return `<tr>
           <td><strong>${fmt(getProp(r, ['Descrição/Código', 'Código']))}</strong></td>
@@ -244,9 +257,9 @@
       }).join('');
     }
 
-    function renderTablePendencias(pend) {
+    function renderTablePendencias(list) {
       const body = document.getElementById('body-pendencias');
-      body.innerHTML = pend.map(r => `<tr>
+      body.innerHTML = list.map(r => `<tr>
         <td><strong>${fmt(getProp(r, ['Descrição/Código', 'Código']))}</strong></td>
         <td>${fmt(getProp(r, ['Disciplina']))}</td>
         <td>${fmt(getProp(r, ['Responsável']))}</td>
@@ -259,9 +272,9 @@
       </tr>`).join('');
     }
 
-    function renderTableEntregaveis(entr) {
+    function renderTableEntregaveis(list) {
       const body = document.getElementById('body-entregaveis');
-      body.innerHTML = entr.map(r => `<tr>
+      body.innerHTML = list.map(r => `<tr>
         <td><strong>${fmt(getProp(r, ['Descrição/Código', 'Código']))}</strong></td>
         <td>${fmt(getProp(r, ['Disciplina']))}</td>
         <td>${fmt(getProp(r, ['Pavimento']))}</td>
@@ -274,80 +287,88 @@
       </tr>`).join('');
     }
 
-    function initChartsDisciplinas(disc) {
+    function createChart(id, config) {
+      if (chartInstances[id]) chartInstances[id].destroy();
+      chartInstances[id] = new Chart(document.getElementById(id), config);
+    }
+
+    function initChartsDisciplinas(list) {
       const statusCounts = {};
-      disc.forEach(r => {
-        const s = getProp(r, ['Status']) || 'Vazio';
-        statusCounts[s] = (statusCounts[s] || 0) + 1;
+      list.forEach(r => {
+        const s = getProp(r, ['Status']);
+        const key = (!s || s === '-') ? 'Vazio' : s;
+        statusCounts[key] = (statusCounts[key] || 0) + 1;
       });
 
-      new Chart(document.getElementById('chartStatusDisciplinas'), {
+      createChart('chartStatusDisciplinas', {
         type: 'doughnut',
         data: {
           labels: Object.keys(statusCounts),
-          datasets: [{ data: Object.values(statusCounts), backgroundColor: ['#34d399', '#fde047', '#f87171', '#38bdf8', '#888'] }]
+          datasets: [{ data: Object.values(statusCounts), backgroundColor: ['#78350f', '#064e3b', '#38bdf8', '#888'] }]
         },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#ccc' } } } }
       });
 
       const faseCounts = {};
-      disc.forEach(r => {
-        const f = getProp(r, ['Fase de Projeto', 'Fase']) || 'Sem Fase';
-        faseCounts[f] = (faseCounts[f] || 0) + 1;
+      list.forEach(r => {
+        const f = getProp(r, ['Fase de Projeto', 'Fase']);
+        const key = (!f || f === '-') ? 'Vazio' : f;
+        faseCounts[key] = (faseCounts[key] || 0) + 1;
       });
 
-      new Chart(document.getElementById('chartFaseDisciplinas'), {
+      createChart('chartFaseDisciplinas', {
         type: 'bar',
         data: {
           labels: Object.keys(faseCounts),
-          datasets: [{ label: 'Qtd. Documentos', data: Object.values(faseCounts), backgroundColor: '#38bdf8' }]
+          datasets: [{ label: 'Documentos', data: Object.values(faseCounts), backgroundColor: '#38bdf8' }]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#aaa' } }, y: { ticks: { color: '#aaa' } } } }
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#aaa' } }, y: { ticks: { color: '#aaa', precision: 0 } } } }
       });
     }
 
-    function initChartsPendencias(pend) {
+    function initChartsPendencias(list) {
       const discCounts = {};
-      pend.forEach(r => {
-        const d = Array.isArray(getProp(r, ['Disciplina'])) ? getProp(r, ['Disciplina'])[0] : getProp(r, ['Disciplina']);
-        const label = d || 'Geral';
+      list.forEach(r => {
+        const d = getProp(r, ['Disciplina']);
+        const label = Array.isArray(d) ? (d[0] || 'Geral') : (d !== '-' ? d : 'Geral');
         discCounts[label] = (discCounts[label] || 0) + 1;
       });
 
-      new Chart(document.getElementById('chartPendenciasDisciplina'), {
+      createChart('chartPendenciasDisciplina', {
         type: 'bar',
         data: {
           labels: Object.keys(discCounts),
           datasets: [{ label: 'Pendências', data: Object.values(discCounts), backgroundColor: '#fde047' }]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#aaa' } }, y: { ticks: { color: '#aaa' } } } }
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#aaa' } }, y: { ticks: { color: '#aaa', precision: 0 } } } }
       });
 
       const stCounts = {};
-      pend.forEach(r => {
-        const s = getProp(r, ['Status']) || 'Vazio';
-        stCounts[s] = (stCounts[s] || 0) + 1;
+      list.forEach(r => {
+        const s = getProp(r, ['Status']);
+        const key = (!s || s === '-') ? 'Vazio' : s;
+        stCounts[key] = (stCounts[key] || 0) + 1;
       });
 
-      new Chart(document.getElementById('chartStatusPendencias'), {
+      createChart('chartStatusPendencias', {
         type: 'doughnut',
         data: {
           labels: Object.keys(stCounts),
-          datasets: [{ label: 'Status', data: Object.values(stCounts), backgroundColor: ['#fde047', '#f87171', '#38bdf8'] }]
+          datasets: [{ data: Object.values(stCounts), backgroundColor: ['#78350f', '#064e3b', '#38bdf8'] }]
         },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#ccc' } } } }
       });
     }
 
-    function initChartsEntregaveis(entr) {
+    function initChartsEntregaveis(list) {
       let emDia = 0, atrasados = 0;
-      entr.forEach(r => {
+      list.forEach(r => {
         const hist = getProp(r, ['Histórico de Atrasos']);
         if (hist && hist !== '-' && hist !== 'Vazio') atrasados++;
         else emDia++;
       });
 
-      new Chart(document.getElementById('chartAtrasosEntregaveis'), {
+      createChart('chartAtrasosEntregaveis', {
         type: 'doughnut',
         data: {
           labels: ['Em Dia / No Prazo', 'Com Atraso Registado'],
@@ -357,21 +378,21 @@
       });
 
       const fmtCounts = {};
-      entr.forEach(r => {
+      list.forEach(r => {
         const fmts = getProp(r, ['Formato de Entrega', 'Formato']);
-        const list = Array.isArray(fmts) ? fmts : [fmts];
-        list.forEach(f => {
+        const arr = Array.isArray(fmts) ? fmts : [fmts];
+        arr.forEach(f => {
           if (f && f !== '-') fmtCounts[f] = (fmtCounts[f] || 0) + 1;
         });
       });
 
-      new Chart(document.getElementById('chartFormatoEntregaveis'), {
+      createChart('chartFormatoEntregaveis', {
         type: 'bar',
         data: {
           labels: Object.keys(fmtCounts),
           datasets: [{ label: 'Formatos', data: Object.values(fmtCounts), backgroundColor: '#a855f7' }]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#aaa' } }, y: { ticks: { color: '#aaa' } } } }
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#aaa' } }, y: { ticks: { color: '#aaa', precision: 0 } } } }
       });
     }
   </script>
